@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dasbor Vendor - GradWear.id</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style_dashboard.css">
+    <style>
+        /* CSS Tambahan agar form sembunyi dulu */
+        .service-form { display: none; margin-top: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 12px; background: #fff; }
+        .sidebar-item { cursor: pointer; }
+        .sidebar-item:hover { background-color: #f0f0f0; }
+    </style>
+</head>
+<body class="dashboard-page">
+
+    <div class="header">
+        <div class="header-left">
+            <span class="menu-icon">☰</span>
+        </div>
+        <div class="header-center">
+            <img src="logo_GradWear (Remove BackGround).png" class="main-logo">
+        </div>
+        <div class="header-right">
+            <div class="icons">
+                <span id="vendor_display_name">Memuat...</span>
+                <img src="user.png" class="header-icon" onclick="handleLogout()" style="cursor: pointer; width: 30px;">
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <div class="dashboard-sidebar">
+            <div class="sidebar-item active" onclick="showSection('rincian')">Rincian Penyewaan</div>
+            <div class="sidebar-item" onclick="showSection('pesan')">Pesan</div>
+            <div class="sidebar-item" onclick="showSection('analitik')">Analitik</div>
+            <div class="sidebar-item" onclick="handleLogout()">Logout</div>
+        </div>
+
+        <div class="dashboard-main" id="main-content">
+            <div id="section-rincian">
+                <h2>Kelola Rincian Penyewaan Anda</h2>
+                <p>Silakan tambahkan dan kelola produk/layanan Anda di bawah ini.</p>
+                
+                <button class="btn-add" onclick="toggleAddProduct()">Tambah Layanan Baru</button>
+
+                <div class="add-product-form" id="addProductArea">
+                    <div class="service-form" id="form-kebaya">
+                        <h3>Tambah Koleksi Kebaya Baru</h3>
+                        <form onsubmit="saveProduct(event)">
+                            <div class="input-group"><label>Foto Kebaya</label><input type="file" required></div>
+                            <div class="input-group"><label>Nama/Jenis Kebaya</label><input type="text" placeholder="Contoh: Kebaya Kutubaru" required></div>
+                            <div class="input-group">
+                                <label>Ukuran (Size)</label>
+                                <select required><option value="S">S</option><option value="M">M</option><option value="L">L</option></select>
+                            </div>
+                            <button type="submit" class="btn-submit">Simpan Produk</button>
+                        </form>
+                    </div>
+
+                    <div class="service-form" id="form-mua">
+                        <h3>Tambah Layanan Make-Up Baru</h3>
+                        <form onsubmit="saveProduct(event)">
+                            <div class="input-group"><label>Portofolio (Foto)</label><input type="file" required></div>
+                            <div class="input-group">
+                                <label>Jenis Make-Up</label>
+                                <select required>
+                                    <option value="bold">Bold Make-up</option>
+                                    <option value="korean">Korean Style</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-submit">Simpan Layanan</button>
+                        </form>
+                    </div>
+
+                    <div class="service-form" id="form-photoshoot">
+                        <h3>Tambah Layanan Photography Baru</h3>
+                        <form onsubmit="saveProduct(event)">
+                            <div class="input-group"><label>Contoh Portofolio</label><input type="file" required></div>
+                            <div class="input-group"><label>Nama Paket</label><input type="text" placeholder="Contoh: Paket Studio" required></div>
+                            <button type="submit" class="btn-submit">Simpan Paket</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section-pesan" style="display:none;"><h2>Pesan Masuk</h2><p>Belum ada pesan dari pelanggan.</p></div>
+            <div id="section-analitik" style="display:none;"><h2>Analitik Bisnis</h2><p>Statistik penjualan akan muncul di sini.</p></div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Ambil data dari pendaftaran sebelumnya
+        const vendorName = localStorage.getItem("vendorBusinessName") || "Vendor";
+        const category = localStorage.getItem("vendorCategory"); // 'kebaya', 'mua', atau 'photoshoot'
+
+        document.getElementById("vendor_display_name").innerText = vendorName;
+
+        // 2. Fungsi Logout
+        function handleLogout() {
+            localStorage.clear();
+            window.location.href = "login.html";
+        }
+
+        // 3. Fungsi Navigasi Sidebar
+        function showSection(section) {
+            document.getElementById('section-rincian').style.display = 'none';
+            document.getElementById('section-pesan').style.display = 'none';
+            document.getElementById('section-analitik').style.display = 'none';
+            
+            document.getElementById('section-' + section).style.display = 'block';
+        }
+
+        // 4. Fungsi Menampilkan Form sesuai Kategori
+        function toggleAddProduct() {
+    // Ambil kategori yang baru saja disimpan
+    const category = localStorage.getItem("vendorCategory");
+
+    // Sembunyikan semua form dulu
+    document.getElementById('form-kebaya').style.display = 'none';
+    document.getElementById('form-mua').style.display = 'none';
+    document.getElementById('form-photoshoot').style.display = 'none';
+
+    // Cek isi kategori dan tampilkan form yang cocok
+    if (category === "kebaya" || category === "Sewa Kebaya") {
+        document.getElementById('form-kebaya').style.display = 'block';
+    } 
+    else if (category === "mua" || category === "Make-Up Artist") {
+        document.getElementById('form-mua').style.display = 'block';
+    } 
+    else if (category === "photoshoot" || category === "Photography") {
+        document.getElementById('form-photoshoot').style.display = 'block';
+    } 
+    else {
+        // Jika masih tidak kenal kategorinya, kita paksa munculkan form Kebaya saja biar tidak kosong
+        console.log("Data kategori aneh: " + category);
+        document.getElementById('form-kebaya').style.display = 'block';
+        alert("Kategori belum tersetting sempurna, menampilkan form default.");
+    }
+}
+        // 5. Fungsi Simpan (Agar form tertutup setelah klik simpan)
+function saveProduct(event) {
+    event.preventDefault(); // Mencegah halaman refresh
+    alert("Produk Berhasil Disimpan ke Koleksi!");
+    
+    // Sembunyikan kembali area form setelah simpan
+    document.getElementById('form-kebaya').style.display = 'none';
+    document.getElementById('form-mua').style.display = 'none';
+    document.getElementById('form-photoshoot').style.display = 'none';
+    
+    // Opsional: Reset isi form agar kosong kembali
+    event.target.reset();
+}
+    </script>
+</body>
+</html>

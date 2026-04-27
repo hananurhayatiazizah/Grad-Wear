@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - GradWear.id</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-page">
+
+    <div class="mobile-frame">
+        <div class="nav-header">
+            <div class="left-nav" onclick="window.location.href='home.html'" style="cursor:pointer">✕ ⌵</div>
+            <div class="right-nav">🔗 •••</div>
+        </div>
+
+        <div class="content">
+    <h1 class="title">LOGIN</h1>
+
+    <div class="login-tabs">
+        <div id="tab-user" class="tab active" onclick="switchTab('user')">Login User</div>
+        <div id="tab-vendor" class="tab" onclick="switchTab('vendor')">Login Vendor</div>
+    </div>
+
+    <p id="login-subtitle" class="subtitle">Temukan Layanan Penting mu di GradWear.id</p>
+
+    <div id="form-container">
+        <form class="login-form" action="home.html">
+            <input type="email" class="input-pink" placeholder="Email" required>
+            <input type="password" class="input-pink" placeholder="Password" required>
+            <div class="remember-me">
+                <input type="checkbox" id="check">
+                <label for="check">Ingatkan Saya</label>
+            </div>
+            <button type="submit" class="btn-login">Login</button>
+        </form>
+    </div>
+
+    <div id="social-login">
+        <div class="divider"><span>Or</span></div>
+        <button class="btn-google">
+                <img src="google.png" alt="Email Icon" style="width: 20px; height: 20px; object-fit: contain; margin-right: 10px;">
+                <span style="vertical-align: middle;">Login with Email Google</span>
+        </button>
+    </div>
+</div>
+
+<script>
+    // 1. FUNGSI UNTUK PINDAH TAB (USER / VENDOR)
+    function switchTab(type) {
+        const userTab = document.getElementById('tab-user');
+        const vendorTab = document.getElementById('tab-vendor');
+        const formContainer = document.getElementById('form-container');
+        const subtitle = document.getElementById('login-subtitle');
+        const socialLogin = document.getElementById('social-login');
+
+        if (type === 'user') {
+            userTab.classList.add('active');
+            vendorTab.classList.remove('active');
+            subtitle.innerText = "Temukan Layanan Penting mu di GradWear.id";
+            if (socialLogin) socialLogin.style.display = "block"; 
+            
+            // Masukkan HTML Form User
+            formContainer.innerHTML = `
+                <form id="loginForm" class="login-form">
+                    <input type="email" id="email" class="input-pink" placeholder="Email Address" required>
+                    <input type="password" id="id_password" class="input-pink" placeholder="Password" required>
+                    <button type="submit" class="btn-login">Login</button>
+                </form>
+            `;
+        } else {
+            vendorTab.classList.add('active');
+            userTab.classList.remove('active');
+            subtitle.innerText = "Create Your Free Business Profile!";
+            if (socialLogin) socialLogin.style.display = "none"; 
+
+            // Masukkan HTML Form Vendor
+            formContainer.innerHTML = `
+                <form id="vendorForm" class="login-form" action="vendor_dashboard.html">
+                    <select class="input-pink" style="color: #6b4b4b; background-color: #fff; border: 1px solid #e4a1a7;">
+                        <option value="">Service Category</option>
+                        <option value="kebaya">Sewa Kebaya</option>
+                        <option value="mua">Make-Up Artist</option>
+                        <option value="photo">Photography</option>
+                    </select>
+                    <input type="text" class="input-pink" placeholder="Business Name" required>
+                    <input type="email" class="input-pink" placeholder="Email Address" required>
+                    <input type="password" class="input-pink" placeholder="Password" required>
+                    <button type="submit" class="btn-login" style="background-color: #e4a1a7;">Start Free Trial</button>
+                </form>
+            `;
+        }
+    }
+
+    // 2. LOGIKA LOGIN (MENGGUNAKAN DELEGASI AGAR SELALU AKTIF)
+    document.addEventListener('submit', function (e) {
+        // Cek apakah form yang disubmit adalah form login user
+        if (e.target && e.target.id === 'loginForm') {
+            e.preventDefault(); 
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('id_password').value;
+
+            // Pengecekan Akun
+            if (email.includes("@") && password.length >= 5) {
+                localStorage.setItem("isLoggedIn", "true");
+                localStorage.setItem("userEmail", email);
+                
+                alert("Login Berhasil!");
+                window.location.href = "profile.html"; // LANGSUNG KE PROFIL
+            } else {
+                alert("Email atau Password salah!");
+            }
+        }
+    });
+
+    // 3. FITUR GOOGLE LOGIN
+    document.addEventListener('submit', function (e) {
+    e.preventDefault(); // Mencegah "File Not Found" atau tanda tanya (?) di URL
+
+    // --- JIKA YANG DIKLIK ADALAH LOGIN USER ---
+    if (e.target && e.target.id === 'loginForm') {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('id_password').value;
+
+        if (email.includes("@") && password.length >= 5) {
+            localStorage.setItem("isLoggedIn", "true");
+            localStorage.setItem("userEmail", email);
+            localStorage.setItem("userRole", "user"); // Tandai sebagai User
+            
+            alert("Login Berhasil!");
+            window.location.href = "profile user.html"; 
+        } else {
+            alert("Email harus pakai @ dan password minimal 5 karakter!");
+        }
+    }
+
+    // --- JIKA YANG DIKLIK ADALAH START FREE TRIAL (VENDOR) ---
+    if (e.target && e.target.id === 'vendorForm') {
+        // Kita tidak langsung ke Dashboard, tapi ke halaman registrasi bertahap
+        alert("Mari lengkapi profil bisnis Anda!");
+        window.location.href = "register_vendor.html"; 
+    }
+});
+    // 4. JALANKAN PERTAMA KALI
+    window.onload = function() {
+        switchTab('user'); // Pastikan saat buka, tab user aktif
+    };
+</script>

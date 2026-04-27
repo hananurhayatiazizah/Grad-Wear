@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search - GradWear.id</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="home-page">
+
+    <div class="header">
+        <div class="header-left">
+            <span class="menu-icon" onclick="window.location.href='home.html'" style="font-size: 30px; cursor: pointer;">☰</span>
+        </div>
+
+        <div class="header-center">
+            <img src="logo_GradWear (Remove BackGround).png" class="main-logo" onclick="window.location.href='home.html'">
+        </div>
+
+        <div class="header-right">
+            <div class="icons">
+                <img src="search 2.png" class="header-icon" onclick="window.location.href='search.html'">
+                <img src="shopping-cart.png" class="header-icon">
+                <img src="user.png" class="header-icon" onclick="window.location.href='login.html'">
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="search-bar-oval">
+            <img src="search 2.png" class="search-icon-img">
+            <input type="text" id="search-input" placeholder="Paket Wisuda" autofocus>
+        </div>
+
+        <div class="search-suggestions" style="padding: 0 25px;">
+            <p style="color: #d17a81; font-weight: bold; font-size: 18px;">Pencarian Terpopuler:</p>
+            <div class="suggestion-tag" style="margin: 15px 0; color: #6b4b4b; cursor: pointer;">Sewa Kebaya</div>
+            <div class="suggestion-tag" style="margin: 15px 0; color: #6b4b4b; cursor: pointer;">Make-Up Artist Makassar</div>
+            <div class="suggestion-tag" style="margin: 15px 0; color: #6b4b4b; cursor: pointer;">Paket Wisuda</div>
+        </div>
+        <div id="search-results-container" class="product-grid" style="display: none; margin-top: 20px;">
+    </div>
+    </div>
+
+    <script>
+    const inputSearch = document.getElementById('search-input');
+
+    // Menggunakan event 'keypress' supaya pindah setelah tekan Enter
+    inputSearch.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            const keyword = this.value.toLowerCase().trim(); // .trim() agar spasi di awal/akhir tidak mengganggu
+
+            if (keyword === 'paket wisuda') {
+                window.location.href = 'paket_wisuda.html';
+            } 
+            else if (keyword === 'sewa kebaya' || keyword === 'kebaya') {
+                window.location.href = 'kebaya.html';
+            } 
+            else if (keyword === 'make-up artist' || keyword === 'mua') {
+                window.location.href = 'make-up.html';
+            } 
+            else if (keyword === 'photoshoot' || keyword === 'foto') {
+                window.location.href = 'photoshoot.html';
+            } 
+            else {
+                alert("Layanan tidak ditemukan. Coba ketik 'Paket Wisuda'");
+            }
+        }
+    });
+
+    // Tambahan: Fungsi untuk teks rekomendasi (Pencarian Terpopuler)
+    function fillSearch(text) {
+        inputSearch.value = text;
+        // Opsional: Langsung pindah halaman saat rekomendasi diklik
+        if (text.toLowerCase() === 'sewa kebaya') {
+            window.location.href = 'sewa_kebaya.html';
+        } else if (text.toLowerCase() === 'paket wisuda') {
+            window.location.href = 'paket_wisuda.html';
+        }
+    }
+</script>
+
+</body>

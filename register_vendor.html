@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran Vendor - GradWear.id</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* CSS Tambahan agar transisi smooth */
+        .form-step { display: none; }
+        .form-step.active { display: block; }
+        .progress-bar .step.active .step-icon { background-color: #CA9393; color: white; border-color: #CA9393; }
+        .progress-bar .step.active { color: #CA9393; font-weight: bold; }
+    </style>
+</head>
+<body class="registration-page">
+
+    <div class="registration-container">
+        <div class="progress-bar">
+            <div class="step active" id="step1-title">
+                <div class="step-icon">1</div>
+                Rincian Akun
+            </div>
+            <div class="step" id="step2-title">
+                <div class="step-icon">2</div>
+                Tentang Bisnis Anda
+            </div>
+            <div class="step" id="step3-title">
+                <div class="step-icon">3</div>
+                Rincian Layanan
+            </div>
+        </div>
+
+        <form id="vendorForm">
+            <div class="form-step active" id="step1">
+                <h2>Rincian Akun</h2>
+                <div class="input-group">
+                    <label for="vendor_name">Nama Anda *</label>
+                    <input type="text" id="vendor_name" placeholder="Masukan nama lengkap Anda" required>
+                </div>
+                <div class="input-group">
+                    <label for="vendor_phone">Nomor Ponsel *</label>
+                    <input type="tel" id="vendor_phone" placeholder="Contoh: 08123456789" required>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn-next" onclick="nextStep(2)">Lanjut</button>
+                </div>
+            </div>
+
+            <div class="form-step" id="step2">
+                <h2>Tentang Bisnis Anda</h2>
+                <div class="input-group">
+                    <label for="business_name">Nama Bisnis *</label>
+                    <input type="text" id="business_name" placeholder="Nama brand/toko Anda">
+                </div>
+                <div class="input-group">
+                    <label for="service_category">Kategori Layanan *</label>
+                    <select id="service_category">
+                        <option value="">Pilih Kategori</option>
+                        <option value="kebaya">Sewa Kebaya</option>
+                        <option value="mua">Make-Up Artist</option>
+                        <option value="photoshoot">Photography</option>
+                    </select>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn-prev" onclick="prevStep(1)">Kembali</button>
+                    <button type="button" class="btn-next" onclick="nextStep(3)">Lanjut</button>
+                </div>
+            </div>
+
+            <div class="form-step" id="step3">
+                <h2>Rincian Layanan</h2>
+                <p>Lengkapi akun untuk akses dashboard.</p>
+                <div class="input-group">
+                    <label for="vendor_email">Email Bisnis *</label>
+                    <input type="email" id="vendor_email" placeholder="email@bisnis.com">
+                </div>
+                <div class="input-group">
+                    <label for="vendor_password">Kata Sandi *</label>
+                    <input type="password" id="vendor_password" placeholder="Minimal 6 karakter">
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn-prev" onclick="prevStep(2)">Kembali</button>
+                    <button type="submit" class="btn-submit">Daftar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+    // 1. FUNGSI NAVIGASI (PINDAH STEP)
+    function showStep(step) {
+        // Sembunyikan semua step
+        const steps = document.querySelectorAll('.form-step');
+        steps.forEach(s => {
+            s.style.display = 'none';
+            s.classList.remove('active');
+        });
+
+        // Tampilkan step yang diklik
+        const targetStep = document.getElementById('step' + step);
+        if (targetStep) {
+            targetStep.style.display = 'block';
+            targetStep.classList.add('active');
+        }
+
+        // Update Progress Bar (lingkaran angka)
+        for (let i = 1; i <= 3; i++) {
+            const title = document.getElementById('step' + i + '-title');
+            if (title) {
+                if (i <= step) title.classList.add('active');
+                else title.classList.remove('active');
+            }
+        }
+    }
+
+    // Fungsi bantu untuk tombol Lanjut/Kembali
+    function nextStep(step) { showStep(step); }
+    function prevStep(step) { showStep(step); }
+
+    // 2. FUNGSI UTAMA UNTUK MENDAFTAR (SUBMIT)
+    function submitForm() {
+        console.log("Proses pendaftaran dimulai...");
+
+        // Ambil elemen input
+        const namaBisnisInput = document.getElementById('business_name');
+        const kategoriInput = document.getElementById('service_category');
+
+        // Validasi jika input tidak ditemukan
+        if (!namaBisnisInput || !kategoriInput) {
+            alert("Error: ID 'business_name' atau 'service_category' tidak ditemukan di HTML!");
+            return;
+        }
+
+        const namaBisnis = namaBisnisInput.value;
+        const kategori = kategoriInput.value;
+
+        // Validasi jika input kosong
+        if (namaBisnis.trim() === "" || kategori === "") {
+            alert("Harap isi Nama Bisnis dan pilih Kategori Layanan di Step 2!");
+            // Jika kosong, arahkan user balik ke step 2 agar dia tahu mana yang harus diisi
+            showStep(2);
+            return;
+        }
+
+        // SIMPAN DATA KE STORAGE
+        localStorage.setItem("vendorBusinessName", namaBisnis);
+        localStorage.setItem("vendorCategory", kategori);
+
+        alert("Pendaftaran Berhasil! Menuju Dashboard...");
+        
+        // PINDAH HALAMAN
+        window.location.href = "dashboard_vendor.html";
+    }
+
+    // 3. LOGIKA TAMBAHAN (MENCEGAH FORM REFRESH SENDIRI)
+    document.addEventListener('DOMContentLoaded', function() {
+        const vendorForm = document.getElementById('vendorForm');
+        if (vendorForm) {
+            vendorForm.onsubmit = function(e) {
+                e.preventDefault(); // Supaya halaman tidak reload
+                submitForm(); // Jalankan fungsi simpan kita
+            };
+        }
+        // Pastikan pas buka pertama kali, Step 1 muncul
+        showStep(1);
+    });
+</script>
+</body>
+</html>

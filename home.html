@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - GradWear.id</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="home-page">
+
+    <div id="sideMenu" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <div class="menu-content">
+        <a href="home.html">Home</a>
+        <a href="paket_wisuda.html">Paket Wisuda</a>
+        <a href="kebaya.html">Kebaya</a>
+        <a href="make-up.html">Make-Up Artist</a>
+        <a href="photoshoot.html">Photoshoot</a>
+        <a href="tentang_kami.html">Tentang Kami</a>
+    </div>
+</div>
+
+    <div class="header">
+        <div class="header-left">
+            <span class="menu-icon" onclick="openNav()">☰</span>
+        </div>
+
+        <div class="header-center">
+            <img src="logo_GradWear (Remove BackGround).png" class="main-logo">
+        </div>
+
+        <div class="header-right">
+            <div class="icons">
+                <img src="search 2.png" class="header-icon">
+                <img src="shopping-cart.png" class="header-icon">
+                <img src="user.png" class="header-icon">
+            </div>
+        </div>
+    </div>
+
+    <div class="home">
+        <div class="hero">
+            <img src="foto background home (orang wisuda).jpeg" alt="wisuda">
+        </div>
+
+        <div style="text-align: center;">
+            <button class="booking">Booking Sekarang</button>
+        </div>
+
+        <div class="menu-grid">
+            <div class="card" onclick="window.location.href='paket_wisuda.html'">Paket Wisuda</div>
+            <div class="card" onclick="window.location.href='kebaya.html'">Sewa Kebaya</div>
+            <div class="card" onclick="window.location.href='make-up.html'">Make-Up Artist</div>
+            <div class="card" onclick="window.location.href='photoshoot.html'">Photoshoot</div>
+        </div>
+    </div>
+
+    <script>
+    // --- 1. FUNGSI SIDEBAR (GARIS 3) ---
+    // Cukup ditulis satu kali saja
+    function openNav() {
+        const sideMenu = document.getElementById("sideMenu");
+        if (sideMenu) sideMenu.style.width = "250px";
+    }
+
+    function closeNav() {
+        const sideMenu = document.getElementById("sideMenu");
+        if (sideMenu) sideMenu.style.width = "0";
+    }
+
+    // --- 2. LOGIKA IKON SEARCH ---
+    const searchIcon = document.querySelector('.icons img:first-child');
+    if (searchIcon) {
+        searchIcon.style.cursor = "pointer";
+        searchIcon.onclick = function() {
+            window.location.href = "search.html";
+        };
+    }
+
+    // --- 3. LOGIKA IKON USER (PROFIL) ---
+    // Menggunakan localStorage agar status login tidak hilang saat refresh
+    const userIcon = document.querySelector('.header-right .icons img:last-child');
+    
+    if (userIcon) {
+        userIcon.style.cursor = "pointer";
+        userIcon.onclick = function() {
+            const statusLogin = localStorage.getItem("isLoggedIn");
+
+            if (statusLogin === "true") {
+                window.location.href = "profile.html"; 
+            } else {
+                window.location.href = "login.html";
+            }
+        };
+    }
+
+    // --- 4. LOGIKA TOMBOL BOOKING ---
+    const bookingBtn = document.querySelector('.booking');
+    if (bookingBtn) {
+        bookingBtn.onclick = function() {
+            const statusLogin = localStorage.getItem("isLoggedIn");
+
+            if (statusLogin === "true") {
+                window.location.href = "sewa_layanan.html"; 
+            } else {
+                alert("Ups! Kamu harus login dulu untuk booking.");
+                window.location.href = "login.html";
+            }
+        };
+    }
+</script>

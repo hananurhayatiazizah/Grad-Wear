@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil User - GradWear.id</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="home-page">
+
+    <div class="header">
+        <div class="header-left">
+            <span class="menu-icon" onclick="window.location.href='home.html'" style="cursor: pointer;">☰</span>
+        </div>
+        <div class="header-center">
+            <img src="logo_GradWear (Remove BackGround).png" class="main-logo" onclick="window.location.href='home.html'">
+        </div>
+        <div class="header-right">
+            <div class="icons">
+                <img src="search 2.png" class="header-icon" onclick="window.location.href='search.html'">
+                <img src="shopping-cart.png" class="header-icon">
+                <img src="user.png" class="header-icon" style="border-bottom: 2px solid #fff;">
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-main-container">
+        <div class="profile-card-figma">
+            <div class="profile-label">Profil User</div>
+            
+            <form id="updateProfileForm" class="profile-form">
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" id="prof-username" placeholder="Masukkan Username">
+                </div>
+
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" id="prof-email" readonly>
+                </div>
+
+                <div class="input-group">
+                    <label>Tanggal Lahir</label>
+                    <input type="date" id="prof-dob">
+                </div>
+
+                <div class="input-group">
+                    <label>Nomor Telfon</label>
+                    <input type="tel" id="prof-phone" placeholder="08xxxxxxx">
+                </div>
+
+                <button type="button" class="btn-simpan-figma" onclick="saveProfile()">Simpan</button>
+                <button type="button" class="btn-logout-simple" onclick="handleLogout()">Logout</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const userEmail = localStorage.getItem("userEmail");
+            if (!userEmail) {
+                window.location.href = "login.html";
+            } else {
+                document.getElementById('prof-email').value = userEmail;
+                // Load data lain jika ada di localStorage
+                document.getElementById('prof-username').value = localStorage.getItem("userName") || "";
+            }
+        });
+
+        function saveProfile() {
+            const name = document.getElementById('prof-username').value;
+            localStorage.setItem("userName", name);
+            alert("Profil Berhasil Disimpan!");
+        }
+
+        function handleLogout() {
+            localStorage.clear();
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>
