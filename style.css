@@ -460,6 +460,40 @@ body.home-page {
     background-color: #b35f66;
 }
 
+/* Wadah utama untuk 3 gambar */
+.image-container-triple {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px;
+}
+
+/* Kotak untuk masing-masing gambar + teks bawahnya */
+.img-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.img-box img {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: contain;
+    border-radius: 8px;
+    border: 2px solid #eecaca; /* Warna bingkai lembut */
+    background-color: #ffffff; 
+}
+
+.img-box span {
+    font-size: 8px;
+    color: #6b4b4b;
+    margin-top: 5px;
+    text-align: center;
+    line-height: 1.2;
+}
+
 /* ===== Kebaya ====== */
 /* Judul Kategori */
 .category-title {
@@ -526,70 +560,116 @@ body.home-page {
     background-color: #b35f66;
 }
 
-/* ===== Make-Up Artist ====== */
-/* Judul Kategori */
-.category-title {
-    text-align: center;
-    color: #6b4b4b;
-    margin: 20px 0;
-    font-size: 1.2rem;
-}
-
-/* Grid Katalog */
-.product-grid {
+/* Ini supaya gambarnya berjajar ke samping, bukan ke bawah */
+.image-container-triple {
     display: flex;
-    flex-direction: column; /* Sesuai desain figma yang memanjang ke bawah */
-    gap: 20px;
-    padding: 0 20px 20px 20px;
+    flex-direction: row; /* Paksa berjajar ke samping */
+    justify-content: space-around;
+    gap: 10px;
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* Kartu Produk */
+/* Ini kotak untuk masing-masing foto */
+.img-box {
+    flex: 1; /* Supaya bagi rata tempatnya */
+    width: 30%; /* Batasi lebar maksimal */
+}
+
+.img-box img {
+    width: 100%;
+    height: 150px; /* Batasi tingginya biar nggak raksasa */
+    object-fit: contain; /* Supaya foto utuh dan nggak kepotong */
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+/* ===== Make-Up Artist Full Reset ===== */
+
+.product-grid {
+    isplay: flex;
+    flex-direction: column;
+    /* Ini yang menciptakan jarak/sekat antar paket secara vertikal */
+    gap: 30px !important; 
+    padding: 20px;
+    background-color: #fce4ec; /* Menyamakan background dengan tema */
+}
+
 .product-card {
-    background-color: #fce4ec; /* Pink muda */
+   background-color: #fce4ec !important; /* SEKAT PUTIH: Memberi warna putih pada seluruh box paket */
     border-radius: 15px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-bottom: 25px; 
+    /* Bayangan halus agar kartu paket terlihat timbul */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
 }
 
-.product-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
+.image-container-triple {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; /* Foto kumpul di tengah */
+    gap: 10px;               /* Jarak antar foto */
+    padding: 15px;
+    /* Pastikan tidak ada warna background di sini agar tidak terlihat kotak putih */
+    background: none !important; 
+}
+
+.img-box {
+    /* Hapus width: 28% atau width: auto sebelumnya */
+    flex: 0 1 auto; /* Kotak akan menciut mengikuti lebar asli gambar */
+    display: flex;
+}
+
+.img-box img {
+    /* Gunakan lebar maksimal yang pas di layar laptop kamu */
+    max-width: 150px !important; 
+    height: auto !important;
+    
+    /* Gunakan cover agar tidak ada area putih di dalam frame gambar */
+    object-fit: cover !important; 
+    
+    border-radius: 10px;
+    display: block;
+    background-color: #f9f9f9;
+}
+
+/* Pastikan Product Card tidak memaksa ada background putih di area gambar */
+.product-card {
+    background-color: #fce4ec; /* Tetap pakai pink tema kamu */
+    border-radius: 15px;
+    overflow: hidden;
 }
 
 .product-info {
     padding: 15px;
     text-align: center;
+    background-color: #ffffff;
 }
 
 .product-info h3 {
     margin: 0;
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: #6b4b4b;
 }
 
 .price {
     color: #d17a81;
     font-weight: bold;
-    margin: 10px 0;
+    margin: 8px 0;
 }
 
-/* Tombol Lihat Detail */
 .btn-detail {
     background-color: #d17a81;
     color: white;
     border: none;
-    padding: 8px 20px;
+    padding: 8px 25px;
     border-radius: 20px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
     transition: 0.3s;
-}
-
-.btn-detail:hover {
-    background-color: #b35f66;
 }
 
 /* ===== Photoshoot ====== */
@@ -656,6 +736,31 @@ body.home-page {
 
 .btn-detail:hover {
     background-color: #b35f66;
+}
+
+/* Ini supaya gambarnya berjajar ke samping, bukan ke bawah */
+.image-container-triple {
+    display: flex;
+    flex-direction: row; /* Paksa berjajar ke samping */
+    justify-content: space-around;
+    gap: 10px;
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Ini kotak untuk masing-masing foto */
+.img-box {
+    flex: 1; /* Supaya bagi rata tempatnya */
+    width: 30%; /* Batasi lebar maksimal */
+}
+
+.img-box img {
+    width: 100%;
+    height: 150px; /* Batasi tingginya biar nggak raksasa */
+    object-fit: contain; /* Supaya foto utuh dan nggak kepotong */
+    border-radius: 8px;
+    background-color: #ffffff;
 }
 
 /* ==== Styling Halaman Tentang Kami ===== */
