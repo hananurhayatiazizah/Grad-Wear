@@ -8,36 +8,43 @@
 </head>
 <body class="home-page">
 
+    <!-- SIDEBAR -->
     <div id="sideMenu" class="sidebar">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <div class="menu-content">
-        <a href="home.html">Home</a>
-        <a href="paket_wisuda.html">Paket Wisuda</a>
-        <a href="kebaya.html">Kebaya</a>
-        <a href="make-up.html">Make-Up Artist</a>
-        <a href="photoshoot.html">Photoshoot</a>
-        <a href="tentang_kami.html">Tentang Kami</a>
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="menu-content">
+            <a href="home.html">Home</a>
+            <a href="paket_wisuda.html">Paket Wisuda</a>
+            <a href="kebaya.html">Kebaya</a>
+            <a href="make-up.html">Make-Up Artist</a>
+            <a href="photoshoot.html">Photoshoot</a>
+            <a href="tentang_kami.html">Tentang Kami</a>
+            <a href="keranjang.html">Lihat Pesanan</a>
+        </div>
     </div>
-</div>
 
+    <!-- HEADER (Sudah Diperbaiki: Logo Merapat ke Kiri) -->
     <div class="header">
         <div class="header-left">
             <span class="menu-icon" onclick="openNav()">☰</span>
+            <img src="logo_GradWear (Remove BackGround).png" class="main-logo" onclick="window.location.href='home.html'">
         </div>
 
         <div class="header-center">
-            <img src="logo_GradWear (Remove BackGround).png" class="main-logo">
+            <div class="search-container">
+                <img src="search 2.png" class="search-icon-inside" id="searchBtn">
+                <input type="text" placeholder="Search" class="search-input" id="searchInput">
+            </div>
         </div>
 
         <div class="header-right">
-            <div class="icons">
-                <img src="search 2.png" class="header-icon">
-                <img src="shopping-cart.png" class="header-icon">
-                <img src="user.png" class="header-icon">
+            <div class="auth-buttons">
+                <a href="login.html" class="btn-login">Masuk & Menjadi Vendor</a>
+                <a href="profile_user.html" class="btn-profile">Profile</a>
             </div>
         </div>
     </div>
 
+    <!-- KONTEN UTAMA -->
     <div class="home">
         <div class="hero">
             <img src="foto background home (orang wisuda).jpeg" alt="wisuda">
@@ -56,8 +63,7 @@
     </div>
 
     <script>
-    // --- 1. FUNGSI SIDEBAR (GARIS 3) ---
-    // Cukup ditulis satu kali saja
+    // --- 1. FUNGSI SIDEBAR ---
     function openNav() {
         const sideMenu = document.getElementById("sideMenu");
         if (sideMenu) sideMenu.style.width = "250px";
@@ -68,38 +74,35 @@
         if (sideMenu) sideMenu.style.width = "0";
     }
 
-    // --- 2. LOGIKA IKON SEARCH ---
-    const searchIcon = document.querySelector('.icons img:first-child');
-    if (searchIcon) {
-        searchIcon.style.cursor = "pointer";
-        searchIcon.onclick = function() {
-            window.location.href = "search.html";
-        };
+    // --- 2. LOGIKA PENCARIAN (Sudah Difix) ---
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+
+    function performSearch() {
+        const keyword = searchInput.value.trim();
+        if (keyword !== "") {
+            window.location.href = "search.html?q=" + encodeURIComponent(keyword);
+        }
     }
 
-    // --- 3. LOGIKA IKON USER (PROFIL) ---
-    // Menggunakan localStorage agar status login tidak hilang saat refresh
-    const userIcon = document.querySelector('.header-right .icons img:last-child');
-    
-    if (userIcon) {
-        userIcon.style.cursor = "pointer";
-        userIcon.onclick = function() {
-            const statusLogin = localStorage.getItem("isLoggedIn");
-
-            if (statusLogin === "true") {
-                window.location.href = "profile_user.html"; 
-            } else {
-                window.location.href = "login.html";
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
             }
-        };
+        });
     }
 
-    // --- 4. LOGIKA TOMBOL BOOKING ---
+    if (searchBtn) {
+        searchBtn.style.cursor = "pointer";
+        searchBtn.onclick = performSearch;
+    }
+
+    // --- 3. LOGIKA TOMBOL BOOKING ---
     const bookingBtn = document.querySelector('.booking');
     if (bookingBtn) {
         bookingBtn.onclick = function() {
             const statusLogin = localStorage.getItem("isLoggedIn");
-
             if (statusLogin === "true") {
                 window.location.href = "sewa_layanan.html"; 
             } else {
@@ -108,4 +111,6 @@
             }
         };
     }
-</script>
+    </script>
+</body>
+</html>

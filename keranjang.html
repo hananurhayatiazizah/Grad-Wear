@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keranjang - GradWear.id</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="cart-page">
+
+    <!-- HEADER (Pastikan sama dengan home.html) -->
+    <div class="header">
+        <div class="header-left">
+            <span class="menu-icon" onclick="window.location.href='home.html'" style="cursor:pointer">☰</span>
+            <img src="logo_GradWear (Remove BackGround).png" class="main-logo" onclick="window.location.href='home.html'">
+        </div>
+        <div class="header-right">
+            <div class="auth-buttons">
+                <a href="profile_user.html" class="btn-profile">Profile</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- KONTEN UTAMA: Area ini akan berubah isinya tergantung status booking -->
+    <div class="order-card" id="cartContent">
+        <!-- JavaScript akan mengisi bagian ini secara otomatis -->
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartContent = document.getElementById('cartContent');
+            
+            // Mengambil data booking yang disimpan di localStorage
+            const bookingData = JSON.parse(localStorage.getItem("bookingData"));
+
+            if (!bookingData) {
+                // Tampilan JIKA KERANJANG KOSONG
+                cartContent.innerHTML = `
+                    <div class="empty-cart-view" style="text-align: center; margin-top: 80px;">
+                        <div style="font-size: 50px;">🛒</div>
+                        <h3 style="color: #666; margin-top: 20px;">Belum ada pesanan</h3>
+                        <p style="color: #999; font-size: 14px;">Sepertinya kamu belum melakukan booking paket wisuda.</p>
+                        <button onclick="window.location.href='home.html'" class="btn-hubungi" style="max-width: 200px; margin-top: 20px;">
+                            Cari Paket Sekarang
+                        </button>
+                    </div>
+                `;
+            } else {
+                // Tampilan JIKA SUDAH ADA PESANAN (Sesuai Screenshot 2026-05-04 223326.png)
+                cartContent.innerHTML = `
+                    <h3 class="order-title">Lihat Pesanan</h3>
+                    
+                    <div class="order-container">
+                        <!-- Grid Foto Produk -->
+                        <div class="image-group">
+                            <div class="item-photo">
+                                <img src="kebaya.jpg" alt="Kebaya">
+                                <p>Kebaya<br>by Gianwardrobe</p>
+                            </div>
+                            <div class="item-photo">
+                                <img src="photo.jpg" alt="Photoshoot">
+                                <p>Photoshoot<br>by Kamerauf.id</p>
+                            </div>
+                            <div class="item-photo">
+                                <img src="makeup.jpg" alt="Make-Up">
+                                <p>Make-Up Artist<br>by Benusaromba</p>
+                            </div>
+                        </div>
+
+                        <!-- Detail Paket -->
+                        <div class="order-details">
+                            <h2 class="package-name">${bookingData.paketName || 'Paket Wisuda 1'}</h2>
+                            <p class="price">Rp. ${bookingData.harga || '1.500.000'}</p>
+                            
+                            <div class="info-row">
+                                <span>Size Baju</span>
+                                <span class="badge">${bookingData.size || 'L'}</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Tanggal</span>
+                                <span class="badge">${bookingData.tanggal || '09/09/2025'}</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Jam Booking</span>
+                                <span class="badge">${bookingData.jam || '04.00 - 14.00'}</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Status</span>
+                                <span class="status-success">Berhasil</span>
+                            </div>
+                            
+                            <p class="timestamp">Dibooking pada ${bookingData.waktuBooking || 'Baru saja'}</p>
+
+                            <!-- Link ke WhatsApp Vendor -->
+                            <button class="btn-hubungi" onclick="window.location.href='https://wa.me/628123456789'">
+                                Hubungi Vendor
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Opsi Tambahan: Batalkan Booking -->
+                    <p onclick="batalkanPesanan()" style="color: #ff6b6b; cursor: pointer; font-size: 12px; margin-top: 20px; text-decoration: underline;">
+                        Batalkan Pesanan Ini
+                    </p>
+                `;
+            }
+        });
+
+        // Fungsi untuk menghapus data booking (Simulasi pembatalan)
+        function batalkanPesanan() {
+            if (confirm("Apakah kamu yakin ingin membatalkan pesanan ini?")) {
+                localStorage.removeItem("bookingData");
+                window.location.reload(); // Refresh halaman agar kembali ke tampilan kosong
+            }
+        }
+    </script>
+</body>
+</html>

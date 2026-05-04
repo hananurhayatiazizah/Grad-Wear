@@ -58,26 +58,34 @@ body.home-page {
 
 /* ===== HEADER ===== */
 .header {
-    display: flex;
+  display: flex;
+   display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
-    background-color: #FDF0F0;
     height: 70px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    background-color: #FDF0F0;
 }
 
-.header-left, .header-center, .header-right {
-    flex: 1;
+.header-left {
     display: flex;
     align-items: center;
+    gap: 12px; /* Jarak pas antara ikon menu dan logo */
+    flex: 0 0 auto; /* Jangan biarkan area ini melebar ke tengah */
 }
 
-.header-left { justify-content: flex-start; }
-.header-center { justify-content: center; }
-.header-right { justify-content: flex-end; }
+.header-center {
+    flex: 1; /* Pendorong utama supaya kiri dan kanan mepet ke ujung */
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.header-right {
+    flex: 0 1 auto; /* Jangan biarkan area ini melebar otomatis */
+    display: flex;
+    justify-content: flex-end;
+}
 
 .menu-icon {
     font-size: 30px;
@@ -86,9 +94,16 @@ body.home-page {
 }
 
 .main-logo {
-    height: 225px;
+   height: 100px !important; /* Ukuran ini pas supaya terbaca tapi tetap ramping */
     width: auto;
-    margin-top: 10px;
+    display: block;
+    cursor: pointer;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    flex: 1;
 }
 
 .icons {
@@ -101,6 +116,93 @@ body.home-page {
     height: 24px;
     object-fit: contain;
     cursor: pointer;
+}
+
+/* Container Tombol Auth */
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Tombol Masuk (Garis Pinggir) */
+.btn-login {
+    text-decoration: none;
+    color: #d17a81; /* Warna pink tema kamu */
+    border: 1px solid #d17a81;
+    padding: 6px 18px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-login:hover {
+    background-color: #fff5f6;
+}
+
+.btn-register:hover {
+    background-color: #b35f66;
+}
+
+/* Gaya untuk tombol Profile (Hapus yang versi garis bawah tadi) */
+.btn-profile {
+   text-decoration: none;
+    color: #d17a81; /* Warna pink tema kamu */
+    border: 1px solid #d17a81;
+    padding: 6px 18px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+/* Efek saat kursor di atas tombol */
+.btn-profile:hover {
+    background-color: #4e3535; /* Cokelat yang lebih gelap */
+}
+
+.btn-profile:hover {
+    background-color: #b35f66;
+}
+
+/* Container untuk Search Bar */
+.search-container {
+    width: 100%;
+    max-width: 450px;
+    height: 38px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+}
+
+.search-container:focus-within {
+    border-color: #d17a81; /* Berubah warna saat diklik */
+    box-shadow: 0 0 5px rgba(209, 122, 129, 0.2);
+}
+
+/* Ikon di dalam Input */
+.search-icon-inside {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    opacity: 0.5;
+}
+
+/* Input Teks */
+.search-input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+    color: #4a4a4a;
+}
+
+.search-input::placeholder {
+    color: #b0b0b0;
 }
 
 /* ===== CONTENT ===== */
@@ -1111,4 +1213,125 @@ body.dashboard-page {
 h3 {
     color: #6b4b4b;
     margin-bottom: 20px;
+}
+
+/* --- STYLE KHUSUS HALAMAN KERANJANG --- */
+
+.order-card {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.order-title {
+    color: #666;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.order-container {
+    background-color: #D39494; /* Warna pink figma kamu */
+    padding: 25px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 380px;
+    color: white;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Layout Foto Sejajar */
+.image-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.item-photo {
+    flex: 1;
+    text-align: center;
+}
+
+.item-photo img {
+    width: 100%;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 5px;
+}
+
+.item-photo p {
+    font-size: 9px;
+    line-height: 1.2;
+    margin: 0;
+}
+
+/* Detail Text */
+.order-details {
+    text-align: center;
+}
+
+.package-name {
+    font-size: 20px;
+    margin: 10px 0 5px 0;
+}
+
+.price {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Baris Info (Size, Tanggal, Jam) */
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.badge {
+    background: white;
+    color: #D39494;
+    padding: 2px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.status-success {
+    background: #fdf0f0;
+    color: #333;
+    padding: 2px 12px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.timestamp {
+    font-size: 10px;
+    margin-top: 15px;
+    opacity: 0.9;
+}
+
+/* Tombol Hubungi */
+.btn-hubungi {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 25px;
+    background-color: #E58E97;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: 0.3s;
+}
+
+.btn-hubungi:hover {
+    background-color: #d17a83;
+    transform: translateY(-2px);
 }
